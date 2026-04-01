@@ -1,0 +1,35 @@
+{
+  "name": "typescript-api",
+  "version": "1.0.0",
+  "description": "Typescript Node.js API",
+  "keywords": [
+    "nodejs",
+    "typescript",
+    "api"
+  ],
+  "homepage": "https://github.com/bruno-lima1504/node-typescript-api#readme",
+  "bugs": {
+    "url": "https://github.com/bruno-lima1504/node-typescript-api/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bruno-lima1504/node-typescript-api.git"
+  },
+  "license": "ISC",
+  "author": "Bruno Lima",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "yarn build && node dist/src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/module-alias": "^2.0.4",
+    "@types/node": "^25.5.0",
+    "typescript": "^6.0.2"
+  },
+  "dependencies": {
+    "module-alias": "^2.3.4"
+  }
+}
