@@ -63,3 +63,6 @@ typings/
 # typescript compiled code
 dist/
 
+#Files For Rest Test
+*rest.http
+

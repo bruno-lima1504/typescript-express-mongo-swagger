@@ -28,6 +28,7 @@
     "noImplicitReturns": true,
     "esModuleInterop": true,
     "strict": true,
+    "useUnknownInCatchVariables": false,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "skipLibCheck": true,
