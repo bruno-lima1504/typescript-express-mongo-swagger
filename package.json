@@ -25,7 +25,7 @@
     "start:dev": "ts-node-dev 'src/index.ts'",
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:functional": "jest --projects ./test --runInBand",
-    "test:unit": "jest",
+    "test:unit": "jest --watchAll",
     "services:lint:run": "eslint ./src ./test --ext .ts",
     "services:lint:fix": "eslint ./src ./test --ext .ts --fix",
     "services:prettier:check": "prettier -c 'src/**/*.ts' 'test/**/*.ts'",
