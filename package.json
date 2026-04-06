@@ -23,9 +23,10 @@
     "build": "tsc",
     "start": "yarn build && node dist/src/index.js",
     "start:dev": "ts-node-dev 'src/index.ts'",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "yarn test:unit && yarn test:functional",
     "test:functional": "jest --projects ./test --runInBand",
-    "test:unit": "jest --watchAll",
+    "test:unit": "jest",
+    "services:run": "docker compose -f infra/compose.yml up -d",
     "services:lint:run": "eslint ./src ./test --ext .ts",
     "services:lint:fix": "eslint ./src ./test --ext .ts --fix",
     "services:prettier:check": "prettier -c 'src/**/*.ts' 'test/**/*.ts'",
@@ -38,11 +39,14 @@
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
     "@types/module-alias": "^2.0.4",
+    "@types/mongoose": "^5.11.97",
+    "@types/nock": "^11.1.0",
     "@types/node": "^25.5.0",
     "@types/supertest": "^7.2.0",
     "eslint": "^10.1.0",
     "globals": "^17.4.0",
     "jest": "^30.3.0",
+    "nock": "^14.0.11",
     "prettier": "3.8.1",
     "supertest": "^7.2.2",
     "ts-jest": "^29.4.9",
@@ -56,6 +60,7 @@
     "body-parser": "^2.2.2",
     "config": "^4.4.1",
     "express": "^5.2.1",
-    "module-alias": "^2.3.4"
+    "module-alias": "^2.3.4",
+    "mongoose": "^9.4.1"
   }
 }
