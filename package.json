@@ -22,14 +22,45 @@
   "scripts": {
     "build": "tsc",
     "start": "yarn build && node dist/src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:dev": "ts-node-dev 'src/index.ts'",
+    "test": "yarn test:unit && yarn test:functional",
+    "test:functional": "jest --projects ./test --runInBand",
+    "test:unit": "jest",
+    "services:run": "docker compose -f infra/compose.yml up -d",
+    "services:lint:run": "eslint ./src ./test --ext .ts",
+    "services:lint:fix": "eslint ./src ./test --ext .ts --fix",
+    "services:prettier:check": "prettier -c 'src/**/*.ts' 'test/**/*.ts'",
+    "services:prettier:fix": "prettier -w 'src/**/*.ts' 'test/**/*.ts'"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/axios": "^0.14.4",
+    "@types/config": "^4.4.0",
+    "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
     "@types/module-alias": "^2.0.4",
+    "@types/mongoose": "^5.11.97",
+    "@types/nock": "^11.1.0",
     "@types/node": "^25.5.0",
-    "typescript": "^6.0.2"
+    "@types/supertest": "^7.2.0",
+    "eslint": "^10.1.0",
+    "globals": "^17.4.0",
+    "jest": "^30.3.0",
+    "nock": "^14.0.11",
+    "prettier": "3.8.1",
+    "supertest": "^7.2.2",
+    "ts-jest": "^29.4.9",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.58.0"
   },
   "dependencies": {
-    "module-alias": "^2.3.4"
+    "@overnightjs/core": "^1.7.6",
+    "axios": "^1.14.0",
+    "body-parser": "^2.2.2",
+    "config": "^4.4.1",
+    "express": "^5.2.1",
+    "module-alias": "^2.3.4",
+    "mongoose": "^9.4.1"
   }
 }

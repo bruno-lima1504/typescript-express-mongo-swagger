@@ -10,7 +10,8 @@
       "es2020"
     ],
     "types": [
-      "node"
+      "node",
+      "jest"
     ],
     // and npm install -D @types/node
     // Other Outputs
@@ -27,18 +28,18 @@
     "noImplicitReturns": true,
     "esModuleInterop": true,
     "strict": true,
+    "useUnknownInCatchVariables": false,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
-    "moduleDetection": "force",
     "skipLibCheck": true,
-    "rootDirs": [
-      "./src",
-      "./test"
-    ],
+    // "rootDirs": [
+    //   "./src",
+    //   "./test"
+    // ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "paths": {
-      "@/*": [
+      "@src/*": [
         "./src/*"
       ],
       "@test/*": [
@@ -49,7 +50,7 @@
   },
   "include": [
     "src/**/*.ts",
-    "test/**/*.ts"
+    "test/**/*.ts",
   ],
   "exclude": [
     "node_modules",
