@@ -1,7 +1,27 @@
 services:
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - ../.env
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    ports:
+      - '3000:3000'
   mongodb:
     image: mongo:latest
-    container_name: meu-mongo
+    container_name: mongodb-server
     restart: always
+    env_file:
+      - ../.env
+    healthcheck:
+      test: ['CMD', 'mongosh', '--eval', "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    # Porta do MongoDB não é exposta para fora (segurança)
     ports:
       - '27017:27017'
