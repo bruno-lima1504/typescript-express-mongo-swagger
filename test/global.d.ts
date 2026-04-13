@@ -1,5 +1,5 @@
-import supertest from 'supertest'
+import supertest from 'supertest';
 
 declare global {
-    var testRequest: supertest.Agent
+  var testRequest: supertest.Agent;
 }

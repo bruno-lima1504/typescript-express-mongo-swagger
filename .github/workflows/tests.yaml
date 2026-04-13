@@ -6,6 +6,16 @@ jobs:
   jest:
     name: Jest Ubuntu
     runs-on: ubuntu-latest
+    services:
+      mongodb:
+        image: mongo:6
+        ports:
+          - 27017:27017
+        options: >-
+          --health-cmd="mongosh --eval \"db.adminCommand('ping')\""
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
     steps:
       - uses: actions/checkout@v4
 
@@ -16,3 +26,5 @@ jobs:
       - run: yarn install --frozen-lockfile
 
       - run: yarn test
+        env:
+          MONGO_URL: mongodb://localhost:27017/surf-forecast-test

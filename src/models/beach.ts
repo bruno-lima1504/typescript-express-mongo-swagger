@@ -1,4 +1,4 @@
-import mongoose, { Model, InferSchemaType } from 'mongoose';
+import mongoose, { Model, InferSchemaType, Schema } from 'mongoose';
 
 export enum BeachPosition {
   S = 'S',
@@ -13,6 +13,7 @@ export interface Beach {
   position: BeachPosition;
   lat: number;
   lng: number;
+  user: string;
 }
 
 const schema = new mongoose.Schema(
@@ -24,6 +25,11 @@ const schema = new mongoose.Schema(
       type: String,
       required: true,
       enum: Object.values(BeachPosition),
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
     },
   },
   {
@@ -40,11 +46,6 @@ const schema = new mongoose.Schema(
 
 // 🔹 Tipo vindo do banco (SEM id)
 export type BeachDB = InferSchemaType<typeof schema>;
-
-// 🔹 Tipo de saída (COM id)
-export type Beach2 = BeachDB & {
-  id: string;
-};
 
 // 🔹 Model
 export const BeachModel: Model<BeachDB> = mongoose.model('Beach', schema);
