@@ -22,7 +22,7 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             # 1. Navegar para a pasta do projeto (ajuste o caminho se necessário)
-            cd ~/app/surf-forecast
+            cd ~/app/node-typescript-api
 
             # 2. Atualizar o código fonte
             git fetch origin
