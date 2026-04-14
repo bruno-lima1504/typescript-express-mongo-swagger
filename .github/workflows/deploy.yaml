@@ -1,0 +1,41 @@
+name: CD - Deploy to Hostinger
+
+on:
+  push:
+    branches:
+      - main # Dispara apenas no merge para a main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            # 1. Navegar para a pasta do projeto (ajuste o caminho se necessário)
+            cd ~/app/surf-forecast
+
+            # 2. Atualizar o código fonte
+            git fetch origin
+            git reset --hard origin/main
+
+            # 3. Reconstruir e subir os containers
+            # O --build garante que o Dockerfile (Node 24 Multi-stage) seja executado
+            docker-compose up -d --build
+
+            # 4. Limpeza de imagens antigas (crucial para não encher o disco da VPS)
+            docker image prune -f
+
+            # 5. Verificação rápida (Health Check)
+            echo "Aguardando inicialização..."
+            sleep 10
+            docker ps
