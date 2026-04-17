@@ -20,6 +20,9 @@ export class SetupServer extends Server {
 
   private setupExpress(): void {
     this.app.use(bodyParser.json());
+    this.app.get('/health', (req, res) => {
+      res.status(200).json({ status: 'ok' });
+    });
   }
 
   private setupControllers(): void {
