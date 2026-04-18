@@ -1,6 +1,7 @@
 import { ForecastPoint, StormGlass } from '@src/clients/stormGlass';
 import { InternalError } from '@src/util/errors/internal-errors';
 import { Beach } from '@src/models/beach';
+import logger from '@src/logger';
 
 export interface BeachForecast extends Omit<Beach, 'user'>, ForecastPoint {}
 
@@ -23,6 +24,7 @@ export class Forecast {
   ): Promise<TimeForecast[]> {
     try {
       const pointWithCorrectSources: BeachForecast[] = [];
+      logger.info(`Preparing the forecast for ${beachs.length} beaches`);
       for (const beach of beachs) {
         const points = await this.stormGlass.fetchPoints(beach.lat, beach.lng);
         const enrichedBeachData = this.enrichBeachData(points, beach);
@@ -30,6 +32,7 @@ export class Forecast {
       }
       return this.mapForecastByTime(pointWithCorrectSources);
     } catch (error) {
+      logger.error(error);
       throw new ForecastProcessingInternalError(error.message);
     }
   }

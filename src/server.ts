@@ -6,6 +6,9 @@ import { Application } from 'express';
 import * as database from '@src/../infra/database';
 import { BeachesController } from './controllers/beaches';
 import { UsersController } from './controllers/users';
+import logger from './logger';
+import pinoHttp from 'pino-http';
+import cors from 'cors';
 
 export class SetupServer extends Server {
   constructor(private port = 3000) {
@@ -23,6 +26,16 @@ export class SetupServer extends Server {
     this.app.get('/health', (req, res) => {
       res.status(200).json({ status: 'ok' });
     });
+    this.app.use(
+      pinoHttp({
+        logger,
+      })
+    );
+    this.app.use(
+      cors({
+        origin: '*',
+      })
+    );
   }
 
   private setupControllers(): void {
@@ -50,7 +63,7 @@ export class SetupServer extends Server {
 
   public start(): void {
     this.app.listen(this.port, () => {
-      console.info('Server listening of port:', this.port);
+      logger.info('Server listening of port:' + this.port);
     });
   }
 }
