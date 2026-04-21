@@ -67,15 +67,14 @@ describe('Users function tests', () => {
         email: 'john@mail.com',
         password: '1234',
       };
-      await new UserModel(newUser).save();
+      const user = await new UserModel(newUser).save();
 
       const response = await global.testRequest
         .post('/users/authenticate')
         .send({ email: newUser.email, password: newUser.password });
 
-      expect(response.body).toEqual(
-        expect.objectContaining({ token: expect.any(String) })
-      );
+      const JwtClaims = AuthService.decodeToken(response.body.token);
+      expect(JwtClaims).toMatchObject({ sub: user.id });
     });
     it('Should return UNAUTHORIZED if the user with the given email is not found', async () => {
       const response = await global.testRequest
@@ -109,7 +108,7 @@ describe('Users function tests', () => {
       };
 
       const user = await new UserModel(newUser).save();
-      const token = AuthService.generateToken(user.toJSON());
+      const token = AuthService.generateToken(user.id);
       const { body, status } = await global.testRequest
         .get('/users/me')
         .set({ 'x-access-token': token });
@@ -125,7 +124,7 @@ describe('Users function tests', () => {
       };
 
       const user = await new UserModel(newUser);
-      const token = AuthService.generateToken(user.toJSON());
+      const token = AuthService.generateToken(user.id);
       const { body, status } = await global.testRequest
         .get('/users/me')
         .set({ 'x-access-token': token });

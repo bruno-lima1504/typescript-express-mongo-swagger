@@ -24,7 +24,7 @@ describe('Beach forecast functional tests', () => {
       user: user.id,
     };
     await new BeachModel(defaultBeach).save();
-    token = AuthService.generateToken(user.toJSON());
+    token = AuthService.generateToken(user.id);
   });
 
   it('should return a forecast with just a few times', async () => {

@@ -12,7 +12,7 @@ export class BeachesController extends BaseController {
     try {
       const beach = new BeachModel({
         ...req.body,
-        ...{ user: req.decoded?.id },
+        ...{ user: req.context?.userId },
       });
       const result = await beach.save();
       res.status(201).send(result);
