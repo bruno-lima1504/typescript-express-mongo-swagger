@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { Rating } from '../rating';
 import { GeoPosition, Beach } from '@src/models/beach';
 
@@ -7,7 +8,7 @@ describe('Rating Service', () => {
     lng: 151.289824,
     name: 'Manly',
     position: GeoPosition.E,
-    user: 'some-user',
+    user: new mongoose.Types.ObjectId() as any,
   };
 
   const defaultRating = new Rating(defaultBeach);

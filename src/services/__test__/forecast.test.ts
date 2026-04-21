@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import { StormGlass } from '@src/clients/stormGlass';
 import stormGlassNormalizedResponseFixture from '@test/fixtures/stormGlass_normalized_response_3_hours.json';
 import { ForecastProcessingInternalError } from '../forecast';
@@ -40,14 +41,14 @@ describe('Forecast Service', () => {
         lng: 151.289824,
         name: 'Manly',
         position: GeoPosition.E,
-        user: 'fake-id',
+        user: new mongoose.Types.ObjectId() as any,
       },
       {
         lat: -33.792726,
         lng: 141.289824,
         name: 'Dee Why',
         position: GeoPosition.S,
-        user: 'fake-id',
+        user: new mongoose.Types.ObjectId() as any,
       },
     ];
     const expectedResponse = [
@@ -108,7 +109,7 @@ describe('Forecast Service', () => {
         lng: 151.289824,
         name: 'Manly',
         position: GeoPosition.E,
-        user: 'some-id',
+        user: new mongoose.Types.ObjectId() as any,
       },
     ];
     const expectedResponse = [
@@ -194,7 +195,7 @@ describe('Forecast Service', () => {
         lng: 151.289824,
         name: 'Manly',
         position: GeoPosition.E,
-        user: 'some-id',
+        user: new mongoose.Types.ObjectId() as any,
       },
     ];
 

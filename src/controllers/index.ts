@@ -1,5 +1,8 @@
 import logger from '@src/logger';
-import { CUSTOM_VALIDATION } from '@src/models/user';
+import {
+  DataBaseError,
+  DatabaseValidationError,
+} from '@src/repositories/repository';
 import ApiError, { APIError } from '@src/util/errors/api-error';
 import { Response } from 'express';
 import mongoose from 'mongoose';
@@ -9,7 +12,7 @@ export abstract class BaseController {
     res: Response,
     error: mongoose.Error.ValidationError | Error
   ): void {
-    if (error instanceof mongoose.Error.ValidationError) {
+    if (error instanceof DatabaseValidationError) {
       const clientErrors = this.handleClientErrors(error);
       res.status(clientErrors.code).send(
         ApiError.format({
@@ -25,14 +28,11 @@ export abstract class BaseController {
     }
   }
 
-  private handleClientErrors(error: mongoose.Error.ValidationError): {
+  private handleClientErrors(error: DataBaseError): {
     code: number;
     error: string;
   } {
-    const duplicatedKindErrors = Object.values(error.errors).filter(
-      (err) => err.kind === CUSTOM_VALIDATION.DUPLICATED
-    );
-    if (duplicatedKindErrors.length) {
+    if (error instanceof DatabaseValidationError) {
       return { code: 409, error: error.message };
     }
     return { code: 400, error: error.message };
